@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ChatScreen from './ChatScreen';
 import {
   View,
   Text,
@@ -25,6 +26,7 @@ const WeatherScreen: React.FC = () => {
   const [hourlyData, setHourlyData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [showChat, setShowChat] = useState(true);
 
   const searchWeather = async () => {
     if (!location.trim()) {
@@ -192,9 +194,12 @@ const WeatherScreen: React.FC = () => {
             </Text>
           </View>
           
-          <TouchableOpacity style={styles.addButton}>
-            <Text style={styles.addIcon}>+</Text>
-          </TouchableOpacity>
+                     <TouchableOpacity 
+             style={styles.addButton}
+             onPress={() => setShowChat(true)}
+           >
+             <Text style={styles.addIcon}>💬</Text>
+           </TouchableOpacity>
         </View>
 
                  {/* Search Section */}
@@ -454,9 +459,14 @@ const WeatherScreen: React.FC = () => {
             </View>
           </View>
         )}
-      </ScrollView>
-    </LinearGradient>
-  );
+              </ScrollView>
+        
+        {/* Chat Screen */}
+        {showChat && (
+          <ChatScreen onBack={() => setShowChat(false)} />
+        )}
+      </LinearGradient>
+    );
 };
 
 const styles = StyleSheet.create({
